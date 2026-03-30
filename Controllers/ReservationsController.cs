@@ -45,4 +45,19 @@ public class ReservationsController : ControllerBase
       throw;
     }
   }
+
+  [HttpDelete("{id}")]
+  [ProducesResponseType(StatusCodes.Status204NoContent)]
+  [ProducesResponseType(StatusCodes.Status404NotFound)]
+  public async Task<IActionResult> DeleteReservation(Guid id)
+  {
+
+    var result = await _reservationService.DeleteReservationAsync(id);
+
+    if (!result)
+      return NotFound(new { message = "Reservation not found" });
+
+    return NoContent();
+  }
+
 }
