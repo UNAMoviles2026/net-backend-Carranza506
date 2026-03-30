@@ -60,4 +60,18 @@ public class ReservationsController : ControllerBase
     return NoContent();
   }
 
+  [HttpGet("{date}")]
+  public async Task<IActionResult> GetByDate(DateOnly date)
+  {
+
+    if (!ModelState.IsValid)
+    {
+      return BadRequest(new { message = "Invalid date format or missing query parameter" });
+    }
+
+    var reservations = await _reservationService.GetByDateAsync(date);
+    
+    return Ok(reservations);
+  }
+
 }
